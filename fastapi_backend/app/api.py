@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from app.relative_volume import RelativeVolumeMain
+from app.rvol_functions.relative_volume import RelativeVolumeMain
+from app.rvol_functions.data_preparation import historicalDataFrame
 
 class Ticker(BaseModel):
     ticker: str
@@ -21,18 +22,14 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.get("/", tags=["root"])
-async def read_root() -> dict:
-    return {"message": "Welcome to your todo list."}
-
-@app.get("/stonks")
-async def reverse_word(word):
-    return word[::-1]
-
 @app.post('/rvol')
 async def calculate_rvol(ticker:Ticker):
     rvol = RelativeVolumeMain(ticker.ticker.upper())
+    df = historicalDataFrame(ticker.ticker.upper())
     if type(rvol) == float:
-        return  f'{rvol:.2f}'
+        return  {
+            'rvol':f'{rvol:.2f}',
+            'atr':f"{df['ATR'][-1]:.2f}"
+    }
     else:
         return ''

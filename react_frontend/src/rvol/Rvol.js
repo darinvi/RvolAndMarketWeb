@@ -1,12 +1,13 @@
 import '../App.css';
-import TestPost from './components/TestPost.js';
+import GetRvol from './components/GetRvol.js';
 
 
 export default function Rvol() {
+  document.title = 'RVOL calculator'
   return (
     <div className="App">
       <header className="App-header">
-      <TestPost />
+      <GetRvol />
       </header>
     </div>  
   );

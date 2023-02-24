@@ -2,6 +2,7 @@ import './App.css';
 import Rvol from './rvol/Rvol.js';
 import Navbar from './Navbar.js'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Backtests from './backtests/Backtests';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="/" element={<Rvol/>} />
-          {/* <Route path="/analysis" element={<Analysis/>} /> */}
+          <Route path="/backtest" element={<Backtests/>} />
         </Routes>
       </BrowserRouter> 
       </header>
