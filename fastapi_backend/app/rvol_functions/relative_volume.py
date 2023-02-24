@@ -32,7 +32,7 @@ def mapUnixToDate(lst):
 def getRegularTradingSession(lst):
     #this one fillters data for the whole trading session.
     regular_session = [rs for rs in lst if \
-        (rs[1].hour==5 and rs[1].minute>29) or rs[1].hour in range(10,16)]
+        (rs[1].hour==9 and rs[1].minute>29) or rs[1].hour in range(10,16)]
     #this one fillters it up to the current moment.
     current_time = [ct for ct in regular_session if \
         ct[1].hour<lst[-1][1].hour or (ct[1].hour==lst[-1][1].hour and ct[1].minute<=lst[-1][1].minute)]
