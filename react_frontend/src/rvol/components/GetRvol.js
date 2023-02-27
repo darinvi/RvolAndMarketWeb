@@ -4,15 +4,23 @@ import axios from 'axios'
 export default function GetRvol(){
     const [ticker,setTicker] = useState('')
     const [result,setResult] = useState('')
+    const [loading,setLoading] = useState(false)
 
+    function handleLoading(){
+        return <h3>Loading...</h3>
+    }
+    
     async function getRelativeVolume(){
+        setLoading((curr)=>!curr)
         try{
-        axios.post('http://localhost:8000/rvol',{ticker:ticker})
-        .then(res => setResult(res.data))
+            const res = await axios.post('http://localhost:8000/rvol',{ticker:ticker})
+            setResult(res.data)
+
         } catch(err){
             console.log(err)
         }
         setTicker('')
+        setLoading((curr)=>!curr)
     }
 
     function renderData(){
@@ -28,11 +36,11 @@ export default function GetRvol(){
     }
 
     return (
-        <div>
+        <div className='getRvol'>
         <label htmlFor='stock'>Ticker:  </label>
         <input type='text' id='stock' value={ticker} onChange={e=>setTicker(e.target.value)}></input>
-        <button onClick={getRelativeVolume}>Get Data</button>
-        {renderData()}
+        <button onClick={getRelativeVolume} className='MyButton'>Get Data</button>
+        { loading ? handleLoading() : renderData()}
         </div>
     )
 }
