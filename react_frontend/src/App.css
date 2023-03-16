@@ -30,6 +30,11 @@
   text-decoration: none;
 }
 
+.RenderCharts {
+  margin-left: 20%;
+  flex-direction: row;
+}
+
 .getRvol {
   margin-left: 10vh;
   margin-top: 10vh;

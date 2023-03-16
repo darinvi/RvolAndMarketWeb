@@ -3,9 +3,8 @@ import axios from 'axios'
 
 export default function RenderCharts(){
     return (
-        <div className='GetRvol'>
-        <h3>FDFDS</h3>
-        <button className='MyButton'>Load chart</button>   
+        <div className='RenderCharts'>
+        <h3>Daily candlestick chart</h3>
         </div>
     )
 }
