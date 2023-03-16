@@ -3,14 +3,16 @@ from app.clients import finnhubClient
 
 
 def RelativeVolumeMain(symbol):
-    candles = getVolumeAndTime(symbol)
+    candles = finnhubClient(symbol)
+    candles = getVolumeAndTime(candles)
     candles = mapUnixToDate(candles)
     candles = getRegularTradingSession(candles)
-    return calculateRelativeVolume(candles)
+    rvol = calculateRelativeVolume(candles)
+    return rvol
+    # return {'rvol':rvol,'open':candles['o'][-1],'high':,'low':,'close':}
     
-def getVolumeAndTime(symbol):
+def getVolumeAndTime(data):
     #only returns volume and time for the purposes of this program
-    data = finnhubClient(symbol)
     try:
         filtered = [element for element in list(map(list,zip(list(data['v']),list(data['t']))))]
         return filtered

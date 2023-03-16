@@ -12,7 +12,10 @@ def finnhubClient(symbol):
 def yahooClient(symbol):
     yf.pdr_override()
     start = datetime.datetime(2000,1,1)
-    end = datetime.datetime(2022,12,31)
+    end = datetime.datetime(2030,12,31)
     df = web.get_data_yahoo(symbol,start, end)
+    print(df.tail(1)['Open'])
+    print(type(df.tail(1)['Open']))
+    print(df.tail(1)['Open']*2)
     return df
 

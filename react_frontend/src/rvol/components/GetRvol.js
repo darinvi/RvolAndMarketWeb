@@ -24,10 +24,17 @@ export default function GetRvol(){
     }
 
     function renderData(){
+        // const render_stats = result.map(e => console.log(e))
         return <>
         {result==='' && <h3>Insert Ticker Name</h3>}
+        {/* {result && {render_stats}} */}
         {result && 
             <>
+            {console.log(result)}
+            <h3>Open: {result.open}</h3>
+            <h3>High: {result.high}</h3>
+            <h3>Low: {result.low}</h3>
+            <h3>Close: {result.close}</h3>
             <h3>RVOL: {result.rvol}</h3>
             <h3>ATR: {result.atr}</h3>
             </>
