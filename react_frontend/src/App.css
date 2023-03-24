@@ -46,6 +46,7 @@
   width: 5%;
   height: 5vh;
   margin-left: 95%;
+  background-color:rgba(208, 24, 24, 0.968)
 }
 
 .RenderCharts {
@@ -75,7 +76,6 @@
   line-height: 16px;
   min-height: 40px;
   outline: 0;
-  padding: 12px 14px;
   text-align: center;
   text-rendering: geometricprecision;
   text-transform: none;
@@ -84,7 +84,7 @@
   touch-action: manipulation;
   vertical-align: middle;
   width: 100px;
-  height: 60px;
+  height: 40px;
 }
 
 .MyButton:hover,
