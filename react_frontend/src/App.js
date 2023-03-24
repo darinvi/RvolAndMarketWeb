@@ -1,18 +1,20 @@
 import './App.css';
-import Rvol from './rvol/Rvol.js';
-import Navbar from './Navbar.js'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Backtests from './backtests/Backtests';
 import {useState} from 'react'
+import Rvol from './rvol/Rvol.js';
+import Navbar from './Navbar.js'
+import Login  from './login/Login';
 
 function App() {
   const [logedIn,setLoggedIn] = useState(false)
+  // const [logedIn,setLoggedIn] = useState(true)
 
 
   return (
-    <div className="App">
+    <div className={`${logedIn ? 'App' : 'NotLogged'}`}>
       {
-      !logedIn ?
+      logedIn ?
       <>
       <BrowserRouter>
         <Navbar/>
@@ -23,7 +25,7 @@ function App() {
       </BrowserRouter>
       </> :
       <>
-      <h3>PASS</h3>
+      <Login setLoggedIn={setLoggedIn} />
       </>
       }
     </div>  

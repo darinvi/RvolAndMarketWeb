@@ -11,6 +11,15 @@
   color: white;
 }
 
+.NotLogged {
+  background-color: #132343;
+  display: flex;
+  min-height: 100vh;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  justify-content: center;
+}
+
 .Navbar { 
   background-color: black;
   position: fixed;
@@ -65,6 +74,8 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
+  width: 100px;
+  height: 60px;
 }
 
 .MyButton:hover,
