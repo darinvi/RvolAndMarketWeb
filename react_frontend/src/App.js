@@ -17,7 +17,7 @@ function App() {
       logedIn ?
       <>
       <BrowserRouter>
-        <Navbar/>
+        <Navbar setLoggedIn={setLoggedIn}/>
         <Routes>
           <Route path="/" element={<Rvol/>} />
           <Route path="/backtest" element={<Backtests/>} />

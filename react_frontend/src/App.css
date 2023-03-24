@@ -34,9 +34,18 @@
 
 .Navlink {
   margin-left: 0vh;
-  padding: 1rem;
+  padding-left: 1rem;
   font-size: 2rem;
   text-decoration: none;
+  margin-right: 0vh;
+}
+
+.LogOutButton {
+  position: fixed;
+  top: 0%;
+  width: 5%;
+  height: 5vh;
+  margin-left: 95%;
 }
 
 .RenderCharts {
@@ -102,3 +111,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
