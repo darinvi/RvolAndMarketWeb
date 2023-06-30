@@ -3,10 +3,6 @@
   background-color: #132343;
   margin-top: 5vh;
   min-height: 95vh;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -45,23 +41,10 @@
   margin-right: 0vh;
 }
 
-.RenderCharts {
-  margin-left: 20%;
-  flex-direction: row;
-}
-
-/* .getRvol {
-  margin-left: 10vh;
-  margin-top: 10vh;
-  width: 60vh;
-} */
-
 .MyButton{
-  margin-left: 5%;
   background: #FF4742;
   border: 1px solid #FF4742;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
   color: #FFFFFF;
   cursor: pointer;
@@ -92,7 +75,7 @@
 
 .MyButton:active {
   opacity: .5;
-}
+}   
 
 body {
   margin: 0;
@@ -101,9 +84,42 @@ body {
     sans-serif;
 }
 
-
 .rvol-section {
   padding: 5em;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+
+.rvol-input {
+  display: flex;
+  gap: 0.5em;
+   align-items: center;
+}
+
+.getRvol input {
+  height: 2em;
+}
+
+.getRvol {
+  display: flex;
+  flex-direction: column;
+}
+
+.renderCharts {
+  margin-top: 0;
+  padding: 0;
+}
+
+.backtest-home {
+  text-align: center;
+}
+
+.backtest-home .MyButton {
+  min-width: 15em;
+}
+
+.strategy-choose {
+  max-width: 30em;
+  margin: auto;
+  text-align: left;
 }

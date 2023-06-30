@@ -9,7 +9,7 @@ export default function Navbar(props){
         <section className='Navbar'>
             <div>
                 <NavLink to='/' className='Navlink' style={links}>RVOL</NavLink>
-                <NavLink to='/second_day' className='Navlink' style={links}>BACKTESTS</NavLink>
+                <NavLink to='/backtest' className='Navlink' style={links}>BACKTESTS</NavLink>
             </div>
             <button className="MyButton" onClick={()=>props.setLoggedIn(false)}>Log Out</button>
         </section>
