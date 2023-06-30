@@ -6,11 +6,13 @@ export default function Navbar(props){
 
     return(
         <>
-        <div className='Navbar'>
-            <NavLink to='/' className='Navlink' style={links}>RVOL</NavLink>
-            <NavLink to='/second_day' className='Navlink' style={links}>BACKTESTS</NavLink>
-        </div>
-        <button className="LogOutButton" onClick={()=>props.setLoggedIn(false)}>Log Out</button>
+        <section className='Navbar'>
+            <div>
+                <NavLink to='/' className='Navlink' style={links}>RVOL</NavLink>
+                <NavLink to='/second_day' className='Navlink' style={links}>BACKTESTS</NavLink>
+            </div>
+            <button className="MyButton" onClick={()=>props.setLoggedIn(false)}>Log Out</button>
+        </section>
         </>
     )
 }
