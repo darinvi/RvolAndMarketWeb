@@ -115,11 +115,18 @@ body {
 }
 
 .backtest-home .MyButton {
-  min-width: 15em;
+  width: 15em;
+}
+
+.strategy-choose input {
+  width: 18em;
+  margin: 1em 0;
 }
 
 .strategy-choose {
   max-width: 30em;
   margin: auto;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }

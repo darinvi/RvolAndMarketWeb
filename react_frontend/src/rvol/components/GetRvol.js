@@ -24,7 +24,7 @@ export default function GetRvol() {
 
     function renderData() {
         const render_result = result && Object.entries(result).map(e => {
-            if (e[0] != 'data') {
+            if (e[0] != 'historical') {
                 return <h3>{e[0]}: {e[1]}</h3>
             }
         })

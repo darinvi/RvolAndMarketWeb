@@ -36,7 +36,11 @@ async def calculate_rvol(ticker:Ticker):
             'close':f"{df['Close'][-1]:.2f}",
             'rvol':f'{rvol:.2f}',
             'atr':f"{df['ATR'][-1]:.2f}",
-            'data': df[['Open','High','Low','Close']][-200:].reset_index().to_dict(orient='index')
+            'historical': df[['Open','High','Low','Close']][-200:].reset_index().to_dict(orient='index')
     }
     else:
         return ''
+    
+@app.post('/backtest')
+async def calculate_rvol(ticker:Ticker):
+    return {'ticker':ticker.ticker.upper()}
