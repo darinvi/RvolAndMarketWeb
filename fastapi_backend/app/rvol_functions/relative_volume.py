@@ -1,65 +1,52 @@
 import datetime,pytz
-from app.clients import finnhubClient
+from app.clients import finnhubClient, yahooClient
+import pandas as pd
 
-
+# Chain all the required functions
 def RelativeVolumeMain(symbol):
-    candles = finnhubClient(symbol)
-    candles = getVolumeAndTime(candles)
-    candles = mapUnixToDate(candles)
-    candles = getRegularTradingSession(candles)
-    rvol = calculateRelativeVolume(candles)
-    return rvol
-    # return {'rvol':rvol,'open':candles['o'][-1],'high':,'low':,'close':}
-    
-def getVolumeAndTime(data):
-    #only returns volume and time for the purposes of this program
-    try:
-        filtered = [element for element in list(map(list,zip(list(data['v']),list(data['t']))))]
-        return filtered
-    except KeyError:
-        return ''
+    df = pd.DataFrame(finnhubClient(symbol))
+    df = unixToNyDate(df)
+    df_today, df_past = separateData(df)
+    return calculateRelativeVolume(df_today, df_past)
 
-def unixToNyDate(lst_element):
-    #finnhub returns unix, much easier to filter based on hour and minute.
+
+# I am using NY time as this is focused on the New York Stock Exchange
+# Not using unix and converting to datetime for easier filtering later
+def unixToNyDate(df):
+    df['datetime'] = pd.to_datetime(df['t'], unit='s')
     ny_timezone = pytz.timezone('America/New_York')
-    unix_to_datetime = datetime.datetime.utcfromtimestamp(lst_element[1]).replace(tzinfo=pytz.utc)
-    as_date = unix_to_datetime.astimezone(ny_timezone)
-    lst_element[1] = as_date
-    return lst_element
+    df['datetime'] = df['datetime'].dt.tz_localize(pytz.utc).dt.tz_convert(ny_timezone)
+    return df[['datetime','v']]
 
-def mapUnixToDate(lst):
-    lst = list(map(unixToNyDate,lst))
-    return lst
 
-def getRegularTradingSession(lst):
-    #this one fillters data for the whole trading session.
-    regular_session = [rs for rs in lst if \
-        (rs[1].hour==9 and rs[1].minute>29) or rs[1].hour in range(10,16)]
-    #this one fillters it up to the current moment.
-    current_time = [ct for ct in regular_session if \
-        ct[1].hour<lst[-1][1].hour or (ct[1].hour==lst[-1][1].hour and ct[1].minute<=lst[-1][1].minute)]
-    return current_time
+# Separating the dataframe into one that contains todays data and one containing data for ~20 days in the past.
+def separateData(data):
+    day_today = data['datetime'].tail(1)
+    df_today = data[(data['datetime'].dt.day == int(day_today.dt.day)) & (data['datetime'].dt.month == int(day_today.dt.month))]
+    df_past = data[(data['datetime'].dt.day != int(day_today.dt.day)) | (data['datetime'].dt.month != int(day_today.dt.month))]
+    return df_today, df_past
 
-def separateData(lst):
-    #separate today's data from data for the past days so I can compare. Only returns closes
-    rolling_days = list(dict.fromkeys([days[1].day for days in lst]))[-21:-1]
-    past_closes = [item[0] for item in lst if item[1].day in rolling_days]
-    today_closes = [item[0] for item in lst if item[1].day==lst[-1][1].day]
-    return past_closes,today_closes
 
-def calculateAverageVolume(lst):
-    try:
-        avg_vol = sum(lst)/len(lst)
-        return avg_vol
-    except ZeroDivisionError:
-        return ''
+# Calculate the average volume done until the current time of day. 
+# If todays dataframe passes will return the accumulated volume for this moment.
+def getCurrentTimeAverageVolume(data):
+    time_now = datetime.datetime.now(pytz.timezone('America/New_York'))
+    df = data[
+        (data['datetime'].dt.hour < time_now.hour) | 
+        ((data['datetime'].dt.hour == time_now.hour) & (data['datetime'].dt.minute <= time_now.minute))
+    ]
+    return df['v'].sum() / getDateLength(data)
 
-def calculateRelativeVolume(lst):
-    past,today = separateData(lst)
-    past_avg = calculateAverageVolume(past)
-    today_avg = calculateAverageVolume(today)
-    try:
-        rvol = today_avg/past_avg
-        return rvol
-    except TypeError:
-        return ''
+
+# Relative Volume is the volume accumulated to this moment today divided by the volume accumulated for the same period in an average day
+def calculateRelativeVolume(df_today, df_past):
+    volume_today = getCurrentTimeAverageVolume(df_today)
+    average_volume = getCurrentTimeAverageVolume(df_past)
+    return volume_today/average_volume
+
+
+# Returns the number of different trading sessions in the dataframe. 1 if todays df passed
+def getDateLength(data):
+    dates = list(map(lambda x: pd.to_datetime(x, unit='ns'), data['datetime'].values.tolist()))
+    unique_dates = set(map(lambda x: f'{x.year}-{x.month}-{x.day}', dates))
+    return len(unique_dates)

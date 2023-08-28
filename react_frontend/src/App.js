@@ -1,14 +1,13 @@
 import './css/site.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Backtests from './backtests/Backtests';
 import {useState} from 'react'
-import Rvol from './rvol/Rvol.js';
+import Rvol from './components/Rvol.js';
 import Navbar from './Navbar.js'
-import Login  from './login/Login';
+import Login  from './components/Login';
+import Backtests from './components/Backtests';
 
 function App() {
   const [logedIn,setLoggedIn] = useState(false)
-  // const [logedIn,setLoggedIn] = useState(true)
 
 
   return (

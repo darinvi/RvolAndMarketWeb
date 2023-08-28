@@ -6,7 +6,7 @@ def finnhubClient(symbol):
     #returns time series for open,high,low,close,volume,time
     epoch = int(time.time())
     client = finnhub.Client(api_key="caq8suiad3iecj6adq7g")
-    data = client.stock_candles(symbol,"1",epoch-4000000,epoch)
+    data = client.stock_candles(symbol,"1",epoch-4400000,epoch)
     return data
 
 def yahooClient(symbol):
@@ -14,8 +14,5 @@ def yahooClient(symbol):
     start = datetime.datetime(2000,1,1)
     end = datetime.datetime(2030,12,31)
     df = web.get_data_yahoo(symbol,start, end)
-    print(df.tail(1)['Open'])
-    print(type(df.tail(1)['Open']))
-    print(df.tail(1)['Open']*2)
     return df
 
